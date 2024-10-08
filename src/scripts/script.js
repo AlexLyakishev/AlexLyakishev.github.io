@@ -8,7 +8,7 @@ CONTACT INFO: wachterfreddy@gmail.com
 /* -------------------- ---------------------- -------------------- */
 /* -------------------- User Defined Variables -------------------- */
 /* -------------------- ---------------------- -------------------- */
-var pageNames = ["Home", "About Me", "Engineering Experience", "Project Experience", "Contact Me"];
+var pageNames = ["Home", "About Me", "Engineering Experience", "Contact Me"];
 
 /* -------------------- ---------------- -------------------- */
 /* -------------------- Static Variables -------------------- */
