@@ -1,8 +1,8 @@
 /*
-PROGRAMMER: Frederick Wachter
-DATE CREATED: 2016-04-13
-PURPOSE: Engineering Portfolio of Frederick Wachter
-CONTACT INFO: wachterfreddy@gmail.com
+PROGRAMMER: Alex Lyakishev
+DATE CREATED: 2024-10-10
+PURPOSE: Engineering Portfolio of Alex Lyakishev
+CONTACT INFO: alexander.lyakishev@outlook.com
 */
 
 /* -------------------- ----- -------------------- */
@@ -495,8 +495,8 @@ a {
 	display:inline-block;
 	position:relative;
 	margin:2px auto;
-	height:200px;
-	width:300px;
+	height:400px;
+	width:600px;
 	cursor:pointer;
 	background:rgba(25,25,25,0.95);
 	-webkit-transition:height 0.5s;
@@ -505,8 +505,8 @@ a {
 .platformImage {
 	top:2px;
 	position:relative;
-	height:150px;
-	width:296px;
+	height:300px;
+	width:592px;
 	margin:0px 2px;
 	background:whitesmoke;
 }
@@ -524,7 +524,7 @@ a {
 	color:white;
 }
 .platform:hover {
-	height:240px;
+	height:480px;
 	background:rgba(25,25,25,1);
 }
 .platform:hover .platformImage {
