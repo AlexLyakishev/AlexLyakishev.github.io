@@ -8,7 +8,7 @@ CONTACT INFO: wachterfreddy@gmail.com
 /* -------------------- ---------------------- -------------------- */
 /* -------------------- User Defined Variables -------------------- */
 /* -------------------- ---------------------- -------------------- */
-var pageNames = ["Home", "About Me", "Engineering Experience", "Contact Me"];
+var pageNames = ["Home", "Projects", "Work Experience", "Contact Me"];
 
 /* -------------------- ---------------- -------------------- */
 /* -------------------- Static Variables -------------------- */
@@ -88,18 +88,18 @@ function setIconLocation(previousIndex,currentIndex,windowResize) {
 	var windowHeight = $(window).height();
 	if ((windowResize == 1) && (currentIndex > 0)) {
 		$("#logo").css({
-			"top":windowHeight - 42 + "px"
+			"top":windowHeight - 15 + "px"
 		});
 	} else if ((previousIndex == 0) && (pageIndex > 0)) {
 		$("#logo").css({
 			"box-shadow":"none",
 			"margin-top":"-75px",
-			"margin-left":"-50px",
-			"top":windowHeight - 42 + "px",
+			"margin-left":"0px",
+			"top":windowHeight - 15 + "px",
 			"background-color":"rgba(0,0,0,0)"
 		});
 		$("#mainLogo").css({
-			"width":"100px"
+			"width":"80px"
 		});
 	} else if ((previousIndex > 0) && (pageIndex == 0)) {
 		$("#logo").css({

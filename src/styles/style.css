@@ -283,10 +283,10 @@ a {
 	position:fixed;
 	top:200px;
 	right:0;
-	height:229px;
+	height:125px;
 	width:64px;
 	border-radius:5px 0px 0px 5px;
-	background-color:black;
+	background-color:white;
 	z-index:2;
 	-webkit-transition:right 1s;
 	transition:right 1s;
@@ -306,7 +306,8 @@ a {
 }
 #logo {
 	position:absolute;
-	margin:-73.5px 0 0 -125px;
+    left: 50%;
+	transform: translate(-50%, -50%);
 	top:0px;
 	left:0px;
 	background-color:rgba(0,0,0,0.88);
@@ -318,19 +319,19 @@ a {
 	transition:top 1.5s, box-shadow 1.5s, background-color 1.5s, margin 1.5s;
 }
 #mainLogo {
-	width:250px;
+	width:180px;
 	-webkit-transition:width 1.5s;
 	transition:width 1.5s;
 }
 #introText {
-	position:fixed;
-	margin:110px 0 0 -187px;
-	top:50%;
-	left:50%;
-	font-size:50px;
-	color:white;
-	-webkit-transition:opacity 1s;
-	transition:opacity 1s;
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    color: white;
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
 }
 
 /* -------------------- -------------- -------------------- */
@@ -443,52 +444,28 @@ a {
 /* -------------------- -------------------- -------------------- */
 /* -------------------- Platform Development -------------------- */
 /* -------------------- -------------------- -------------------- */
-#platform_background_hexcopter {
-	background:url(img/platforms/Hexcopter.jpg) no-repeat center center;
+#platform_background_vfs {
+	background:black url(/assets/img/VFS-Team.png) no-repeat center center;
 }
-#platform_background_tdmr {
-	background:url(img/platforms/Mapping.png) no-repeat center center;
+#platform_background_baja {
+	background:url(/assets/img/Baja-1.png) no-repeat center center;
 }
-#platform_background_robot_arm {
-	background:url(img/platforms/Robot_Arm.png) no-repeat center center;
+#platform_background_inspira {
+	background:white url(/assets/img/Inspira-1.jpg) no-repeat center center;
 }
-#platform_background_thor {
-	background:url(img/platforms/THOR.jpg) no-repeat center center;
+#platform_background_snowboard {
+	background:white url(/assets/img/Snowboard-1.png) no-repeat center center;
 }
-#platform_background_hyperloop {
-	background:url(img/platforms/Hyperloop.png) no-repeat center center;
-}
-#platform_background_yumi {
-	background:url(img/platforms/YuMi.png) no-repeat center center;
-}
-#platform_background_dragon {
-	background:url(img/platforms/Dragon.jpg) no-repeat center center;
-}
-#platform_background_micromouse {
-	background:white url(img/platforms/Micromouse.png) no-repeat center center;
-}
-#platform_background_swerve {
-	background:white url(img/platforms/SwervePlatform.png) no-repeat center center;
-}
-#platform_background_auto_flight {
-	background:white url(img/platforms/ATL.png) no-repeat center center;
-}
-#platform_background_auto_boat {
-	background:white url(img/platforms/ATL.png) no-repeat center center;
-}
-#platform_background_soccer {
-	background:white url(img/platforms/Soccer.png) no-repeat center center;
-}
-#platform_background_hexcopter, #platform_background_tdmr, #platform_background_robot_arm, 
-#platform_background_thor, #platform_background_hyperloop, #platform_background_yumi, 
-#platform_background_dragon, #platform_background_micromouse, #platform_background_swerve,
-#platform_background_auto_flight, #platform_background_auto_boat, #platform_background_soccer {
+
+/* Images for classes to crop */
+#platform_background_baja, #platform_background_inspira, #platform_background_snowboard, #platform_background_vfs {
 	height:100%;
 	width:100%;
 	background-size:cover;
 }
-#platform_background_micromouse, #platform_background_swerve, #platform_background_auto_flight, 
-#platform_background_auto_boat {
+
+/* Images for classes to show in full, no cropping */
+#platform_background_vfs {
 	background-size:contain;
 }
 .platform {
@@ -524,7 +501,7 @@ a {
 	color:white;
 }
 .platform:hover {
-	height:480px;
+	height:400px;
 	background:rgba(25,25,25,1);
 }
 .platform:hover .platformImage {
@@ -546,21 +523,21 @@ a {
 }
 
 /* -------------------- ---------------------- -------------------- */
-/* -------------------- Engineering Experience -------------------- */
+/* -------------------- Work Experience -------------------- */
 /* -------------------- ---------------------- -------------------- */
-#job_background_ATL {
-	background:url(img/work/ATL.png) no-repeat center center;
+#job_background_craftylayers {
+	background:url(/assets/img/A1_mini.jpg) no-repeat center center;
 }
-#job_background_ASL {
-	background:url(img/work/ASL.png) no-repeat center center;
+#job_background_ta {
+	background:url(/assets/img/ta_mcgill.png) no-repeat center center;
 }
-#job_background_PTW {
-	background:url(img/work/PTW.png) no-repeat center center;
+#job_background_readylab {
+	background:url(/assets/img/readylab_logo.jpg) no-repeat center center;
 }
-#job_background_ATL, #job_background_ASL, #job_background_PTW {
+#job_background_craftylayers, #job_background_ta, #job_background_readylab {
 	height:100%;
 	width:100%;
-	background-size:contain;
+	background-size:cover;
 }
 .job {
 	position:relative;
@@ -608,7 +585,7 @@ a {
 }
 
 /* -------------------- ------------------ -------------------- */
-/* -------------------- Project Experience -------------------- */
+/* -------------------- Work Experience -------------------- */
 /* -------------------- ------------------ -------------------- */
 #project_background_Hyperloop {
 	background:url(img/projects/Hyperloop.png) no-repeat center center;
