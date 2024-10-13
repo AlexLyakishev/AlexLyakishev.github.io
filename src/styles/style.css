@@ -445,7 +445,7 @@ a {
 /* -------------------- Platform Development -------------------- */
 /* -------------------- -------------------- -------------------- */
 #platform_background_vfs {
-	background:black url(/img/VFS-Team.png) no-repeat center center;
+	background:black url(assets/img/VFS-Team.png) no-repeat center center;
 }
 #platform_background_baja {
 	background:url(/img/Baja-1.png) no-repeat center center;
