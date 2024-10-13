@@ -286,7 +286,7 @@ a {
 	height:125px;
 	width:64px;
 	border-radius:5px 0px 0px 5px;
-	background-color:white;
+	background-color: white;
 	z-index:2;
 	-webkit-transition:right 1s;
 	transition:right 1s;
@@ -445,10 +445,10 @@ a {
 /* -------------------- Platform Development -------------------- */
 /* -------------------- -------------------- -------------------- */
 #platform_background_vfs {
-	background:black url(/assets/img/VFS-Team.png) no-repeat center center;
+	background:black url(/img/VFS-Team.png) no-repeat center center;
 }
 #platform_background_baja {
-	background:url(/assets/img/Baja-1.png) no-repeat center center;
+	background:url(/img/Baja-1.png) no-repeat center center;
 }
 #platform_background_inspira {
 	background:white url(/assets/img/Inspira-1.jpg) no-repeat center center;
