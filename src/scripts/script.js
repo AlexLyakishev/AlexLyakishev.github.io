@@ -311,7 +311,8 @@ $(".project").hover(
 $("#contentPage3").submit(function(e) {
 	e.preventDefault();
 	$.ajax({
-	    url: "https://formspree.io/wachterfreddy@gmail.com", 
+		/*https://formspree.io/wachterfreddy@gmail.com*/
+	    url: "alexander.lyakishev@outlook.com", 
 	    method: "POST",
 	    data: {name: $("#userName").val(), _replyto: $("#userEmail").val(), message: $("#userMessage").val()},
 	    dataType: "json"
