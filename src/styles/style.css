@@ -301,7 +301,7 @@ a {
 /* -------------------- ------------- -------------------- */
 #intro {
 	position:fixed;
-	background:#0A0A0A url("img/Drexel_MainBuilding.png") no-repeat center center;
+	background:#0A0A0A url("img/") no-repeat center center;
 	background-size:cover;
 }
 #logo {
@@ -447,6 +447,9 @@ a {
 #platform_background_vfs {
 	background:black url(/assets/img/VFS-Team.png) no-repeat center center;
 }
+#platform_background_vfs_wind_direction {
+	background:black url(/assets/img/Sensors-Graph.jpeg) no-repeat center center;
+}
 #platform_background_baja {
 	background:url(/assets/img/Baja-1.png) no-repeat center center;
 }
@@ -457,15 +460,15 @@ a {
 	background:white url(/assets/img/Snowboard-1.png) no-repeat center center;
 }
 
-/* Images for classes to crop */
-#platform_background_baja, #platform_background_inspira, #platform_background_snowboard, #platform_background_vfs {
+/* Images for classes to show */
+#platform_background_baja, #platform_background_inspira, #platform_background_snowboard, #platform_background_vfs, #platform_background_vfs_wind_direction {
 	height:100%;
 	width:100%;
 	background-size:cover;
 }
 
 /* Images for classes to show in full, no cropping */
-#platform_background_vfs {
+#platform_background_vfs, #platform_background_vfs_wind_direction {
 	background-size:contain;
 }
 .platform {
