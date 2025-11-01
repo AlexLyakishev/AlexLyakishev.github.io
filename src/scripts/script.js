@@ -68,7 +68,8 @@ function windowResize() {
 		$("#page2").addClass("scroll");
 	}
 
-	offsetPages(pageIndex,windowWidth);
+	// use windowHeight for vertical offset
+	offsetPages(pageIndex, windowHeight);
 	setIconLocation(null,pageIndex,1);
 	adjustVideoSize_Page1(windowWidth);
 }
@@ -76,11 +77,11 @@ function windowResize() {
 /* -------------------- -------- -------------------- */
 /* -------------------- Function -------------------- */
 /* -------------------- -------- -------------------- */
-function offsetPages(index,windowWidth) {
-	var offset = (-index) * windowWidth;
+function offsetPages(index, windowHeight) {
+	var offset = (-index) * windowHeight;
 	for (var i = 0; i < totalPages; i++) {
 		$(".page").eq(i).css({
-			"left":offset + (windowWidth * i) + "px"
+			"top": offset + (windowHeight * i) + "px"
 		});
 	}
 }
@@ -171,12 +172,12 @@ function displayPageName(index) {
 /* -------------------- Click Functions -------------------- */
 /* -------------------- --------------- -------------------- */
 $(".footerButton").click(function() {
-	var windowWidth = $(window).width();
+	var windowHeight = $(window).height();
 	var previousIndex = pageIndex;
 	pageIndex = $(this).index();
 
 	if (previousIndex != pageIndex) {
-		offsetPages(pageIndex,windowWidth);
+		offsetPages(pageIndex, windowHeight);
 		toggleActivePage(previousIndex,pageIndex);
 
 		if (pageIndex != 0) {
@@ -305,7 +306,7 @@ $(".project").hover(
 	}
 );
 
-/* -------------------- ----------------------- -------------------- */
+/* -------------------- ---------------- -------------------- */
 /* -------------------- Contact Form Submission -------------------- */
 /* -------------------- ----------------------- -------------------- */
 $("#contentPage3").submit(function(e) {
@@ -343,3 +344,171 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 ga('create', 'UA-69516450-3', 'auto');
 ga('send', 'pageview');
+
+/* -------------------- ---------------- -------------------- */
+/* -------------------- Scrolling / Touch Handling  -------------------- */
+/* -------------------- ---------------- -------------------- */
+var scrollLock = false;            // prevent rapid repeated page changes
+var scrollDelay = 800;             // ms delay between page changes (match visual transition)
+var touchStartY = null;
+var touchThreshold = 50;           // px required to consider a swipe
+
+// track scrollable element touched (if any)
+var touchScrollableAncestor = null;
+
+// helper: find nearest ancestor (including self) that is vertically scrollable
+function findScrollableAncestor(el) {
+	while (el && el !== document.body && el !== document.documentElement) {
+		if (el.nodeType === 1) {
+			var style = window.getComputedStyle(el);
+			var overflowY = style.overflowY;
+			// treat explicit scroll/auto or elements using .scroll class as scrollable
+			if ((overflowY === 'auto' || overflowY === 'scroll' || el.classList.contains('scroll')) && el.scrollHeight > el.clientHeight) {
+				return el;
+			}
+		}
+		el = el.parentElement;
+	}
+	// removed fallback to document.scrollingElement to avoid false positives
+	return null;
+}
+
+// helper: check if element can scroll further in a given direction
+// direction > 0 => scroll down (content moves up), direction < 0 => scroll up
+function canScroll(el, direction) {
+	if (!el) return false;
+	if (direction > 0) {
+		// can scroll down if not at bottom
+		return el.scrollTop + el.clientHeight < el.scrollHeight - 1;
+	} else if (direction < 0) {
+		// can scroll up if not at top
+		return el.scrollTop > 1;
+	}
+	return false;
+}
+
+function changePage(newIndex) {
+	if (newIndex < 0) newIndex = 0;
+	if (newIndex >= totalPages) newIndex = totalPages - 1;
+	if (newIndex === pageIndex) return;
+
+	var previousIndex = pageIndex;
+	pageIndex = newIndex;
+
+	var windowHeight = $(window).height();
+	offsetPages(pageIndex, windowHeight);
+	toggleActivePage(previousIndex, pageIndex);
+
+	if (pageIndex !== 0) {
+		$("#introText").css({"opacity":"0"});
+	} else {
+		$("#introText").css({"opacity":"1"});
+	}
+
+	displayPageName(pageIndex);
+}
+
+/* wheel handling — use non-passive listener to allow preventDefault
+   Allow native scrolling when the wheel event occurs on a scrollable ancestor
+   that can still scroll in the wheel direction. Otherwise treat as page change. */
+window.addEventListener('wheel', function(e) {
+	var delta = e.deltaY;
+	if (Math.abs(delta) < 5) return;
+
+	// find nearest scrollable element from the event target
+	var target = e.target;
+	var scrollable = findScrollableAncestor(target);
+
+	// if scrollable exists and it can scroll in delta direction, allow native scroll
+	if (scrollable && canScroll(scrollable, delta)) {
+		// do not interfere with native scrolling
+		return;
+	}
+
+	// otherwise intercept and navigate pages
+	if (scrollLock) { e.preventDefault(); return; }
+	e.preventDefault();
+
+	scrollLock = true;
+	if (delta > 0) {
+		changePage(pageIndex + 1);
+	} else {
+		changePage(pageIndex - 1);
+	}
+	setTimeout(function(){ scrollLock = false; }, scrollDelay);
+}, {passive: false});
+
+/* touch handling for mobile / touch screens
+   Record scrollable ancestor on touchstart. On touchend, if the scrollable
+   ancestor can still scroll further in swipe direction, let native scroll (do nothing).
+   Otherwise perform page change. */
+window.addEventListener('touchstart', function(e) {
+	if (e.touches && e.touches.length) {
+		touchStartY = e.touches[0].clientY;
+		// store nearest scrollable ancestor at the start of the gesture
+		touchScrollableAncestor = findScrollableAncestor(e.target);
+	}
+}, {passive: true});
+
+window.addEventListener('touchend', function(e) {
+	if (touchStartY === null) return;
+	var touchEndY = (e.changedTouches && e.changedTouches.length) ? e.changedTouches[0].clientY : null;
+	if (touchEndY === null) { touchStartY = null; touchScrollableAncestor = null; return; }
+
+	var delta = touchStartY - touchEndY;
+	touchStartY = null;
+
+	if (Math.abs(delta) < touchThreshold) { touchScrollableAncestor = null; return; }
+
+	// if we started inside a scrollable element and it can scroll in the swipe direction,
+	// let native scrolling handle it (no page change).
+	if (touchScrollableAncestor) {
+		// Re-check ability to scroll in that direction at touchend (native scroll may have moved)
+		if (canScroll(touchScrollableAncestor, delta)) {
+			touchScrollableAncestor = null;
+			return;
+		}
+	}
+
+	if (scrollLock) { touchScrollableAncestor = null; return; }
+
+	scrollLock = true;
+	if (delta > 0) {
+		changePage(pageIndex + 1);
+	} else {
+		changePage(pageIndex - 1);
+	}
+	touchScrollableAncestor = null;
+	setTimeout(function(){ scrollLock = false; }, scrollDelay);
+}, {passive: true});
+
+/* keyboard navigation (up/down arrows, PageUp/PageDown, Home/End) */
+$(document).on('keydown', function(e) {
+	// when user types into form inputs we should not intercept - ignore if focus is in an input or textarea
+	var tag = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toLowerCase() : null;
+	if (tag === 'input' || tag === 'textarea') return;
+
+	if (scrollLock) return;
+
+	if (e.key === "ArrowDown" || e.key === "PageDown") {
+		scrollLock = true;
+		changePage(pageIndex + 1);
+		setTimeout(function(){ scrollLock = false; }, scrollDelay);
+		e.preventDefault();
+	} else if (e.key === "ArrowUp" || e.key === "PageUp") {
+		scrollLock = true;
+		changePage(pageIndex - 1);
+		setTimeout(function(){ scrollLock = false; }, scrollDelay);
+		e.preventDefault();
+	} else if (e.key === "Home") {
+		scrollLock = true;
+		changePage(0);
+		setTimeout(function(){ scrollLock = false; }, scrollDelay);
+		e.preventDefault();
+	} else if (e.key === "End") {
+		scrollLock = true;
+		changePage(totalPages - 1);
+		setTimeout(function(){ scrollLock = false; }, scrollDelay);
+		e.preventDefault();
+	}
+});
