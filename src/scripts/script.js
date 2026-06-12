@@ -1,10 +1,3 @@
-/*
-PROGRAMMER: Frederick Wachter
-DATE CREATED: 2016-04-13
-PURPOSE: Engineering Portfolio of Frederick Wachter
-CONTACT INFO: wachterfreddy@gmail.com
-*/
-
 /* -------------------- ---------------------- -------------------- */
 /* -------------------- User Defined Variables -------------------- */
 /* -------------------- ---------------------- -------------------- */
