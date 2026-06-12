@@ -408,34 +408,34 @@ function changePage(newIndex) {
 	displayPageName(pageIndex);
 }
 
-/* wheel handling — use non-passive listener to allow preventDefault
-   Allow native scrolling when the wheel event occurs on a scrollable ancestor
-   that can still scroll in the wheel direction. Otherwise treat as page change. */
+// Replace the entire wheel event listener with this:
 window.addEventListener('wheel', function(e) {
-	var delta = e.deltaY;
-	if (Math.abs(delta) < 5) return;
+    var target = e.target;
+    var currentPage = document.querySelector('.page:nth-child(' + (pageIndex + 1) + ')');
+    
+    // Allow scrolling if the page has scrollable content
+    if (currentPage.scrollHeight > currentPage.clientHeight) {
+        if ((currentPage.scrollTop === 0 && e.deltaY < 0) || 
+            (currentPage.scrollTop + currentPage.clientHeight >= currentPage.scrollHeight && e.deltaY > 0)) {
+            // At top scrolling up or bottom scrolling down - switch pages
+            e.preventDefault();
+            if (!scrollLock) {
+                scrollLock = true;
+                changePage(pageIndex + (e.deltaY > 0 ? 1 : -1));
+                setTimeout(function() { scrollLock = false; }, scrollDelay);
+            }
+        }
+        // Otherwise let the default scroll behavior happen
+        return;
+    }
 
-	// find nearest scrollable element from the event target
-	var target = e.target;
-	var scrollable = findScrollableAncestor(target);
-
-	// if scrollable exists and it can scroll in delta direction, allow native scroll
-	if (scrollable && canScroll(scrollable, delta)) {
-		// do not interfere with native scrolling
-		return;
-	}
-
-	// otherwise intercept and navigate pages
-	if (scrollLock) { e.preventDefault(); return; }
-	e.preventDefault();
-
-	scrollLock = true;
-	if (delta > 0) {
-		changePage(pageIndex + 1);
-	} else {
-		changePage(pageIndex - 1);
-	}
-	setTimeout(function(){ scrollLock = false; }, scrollDelay);
+    // For non-scrollable pages, maintain the page switching behavior
+    e.preventDefault();
+    if (!scrollLock) {
+        scrollLock = true;
+        changePage(pageIndex + (e.deltaY > 0 ? 1 : -1));
+        setTimeout(function() { scrollLock = false; }, scrollDelay);
+    }
 }, {passive: false});
 
 /* touch handling for mobile / touch screens
